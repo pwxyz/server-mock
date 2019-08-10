@@ -7,7 +7,8 @@ const presets = [
         firefox: "60",
         chrome: "67",
         safari: "11.1",
-        ie:'9'
+        ie:'9',
+        node: '10.16'
       },
       useBuiltIns: "entry",
     },
@@ -16,7 +17,12 @@ const presets = [
 ];
 
 const plugins = [ 
-  ["@babel/plugin-transform-typescript"]
+  [
+    'transform-object-rest-spread', 
+    {
+    "useBuiltIns": true
+    }
+  ]
 ]
 
 const extensions = [ '.ts' ]
