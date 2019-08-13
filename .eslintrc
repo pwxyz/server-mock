@@ -1,0 +1,18 @@
+{
+  "extends": "eslint-config-alloy/typescript",
+  "env": {
+    "node": true
+  },
+  "rules": {
+    "indent": [
+      "error",
+      2,
+      {
+        "SwitchCase": 1,
+        "flatTernaryExpressions": true
+      }
+    ],
+    "no-unused-vars":"error",
+    "guard-for-in":"off"
+  }
+}
