@@ -7,6 +7,9 @@ import cache from './middleware/cache';
 import * as path from 'path';
 import router from './routers';
 
+import catchErr from './middleware/catchErr'
+import decryptToken from './middleware/decryptToken';
+
 dotenv.config();
 
 require('./db');
@@ -14,6 +17,8 @@ require('./db');
 const app = new Koa();
 const port = process.env.PORT || 3364;
 
+app.use(catchErr)
+app.use(decryptToken)
 app.use(Cors());
 app.use(body({
   multipart: true,
