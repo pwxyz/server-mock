@@ -51,7 +51,6 @@ login.put('/', async ctx => {
     res.message = '该用户已存在';
     return ctx.body = res 
   }
-  console.log(obj)
   let password = encrypt(obj['password'])
   let data = await User.create({ name: obj['name'], password }) 
   if(!data){

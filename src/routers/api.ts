@@ -32,6 +32,31 @@ api.post('/', async ctx => {
   return ctx.body = res
 })
 
+
+api.put('/:id', async ctx => {
+  let res = {
+    status: -1,
+    message: 'service error'
+  }
+  const { err, obj } = getArgAndCheck(ctx.request['body'], ['+router', '+method', 'headers', 'req', 'res', '+belongTo'])
+  if(err){
+    res.message = err;
+    return ctx.body = res
+  }
+  let id = ctx.params['id']
+  obj['updatedAt'] = Number(new Date())
+  let apis = await Api.findByIdAndUpdate(id, obj, { new:true })
+  if(apis&&apis['_id']){
+    res.message = '修改成功',
+    res.status = 1
+    res['payload'] = {
+      api:apis
+    }
+  }
+
+  return ctx.body = res
+})
+
 // 此处为自动添加路由，默认headers中只有access-token
 api.all('/auto/:projectId/:router*', async ctx => {
   let resObj = {

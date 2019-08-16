@@ -36,7 +36,7 @@ project.post('/', async ctx => {
   return ctx.body = res
 })
 
-project.put('/', async ctx => {
+project.put('/:id', async ctx => {
   let res = {
     status: -1,
     message: 'service error'
@@ -46,8 +46,8 @@ project.put('/', async ctx => {
     res.message = err ;
     return ctx.body = res
   }
-  let id = obj['id']
-  delete obj['id']
+  let id = ctx.params['id']
+  obj['updatedAt'] = Number(new Date())
   let project = await Project.findByIdAndUpdate(id, obj, { new: true })
   if(project&&project['_id']){
     res.message = '修改成功'
