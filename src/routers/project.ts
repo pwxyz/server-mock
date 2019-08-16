@@ -12,7 +12,7 @@ project.post('/', async ctx => {
     status: -1,
     message: 'service error'
   }
-  const { err, obj } = getArgAndCheck(ctx.request.body, ['+name', 'description'])
+  const { err, obj } = getArgAndCheck(ctx.request['body'], ['+name', 'description', 'testUrl'])
   if(err){
     res.message = err ;
     return ctx.body = res
@@ -41,7 +41,7 @@ project.put('/', async ctx => {
     status: -1,
     message: 'service error'
   }
-  const { err, obj } = getArgAndCheck(ctx.request.body, ['name', 'description', '+id'])
+  const { err, obj } = getArgAndCheck(ctx.request['body'], ['name', 'description', '+id', 'testUrl' ])
   if(err){
     res.message = err ;
     return ctx.body = res

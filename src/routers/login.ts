@@ -14,7 +14,7 @@ login.post('/', async ctx => {
     status: -1,
     message: 'service error'
   }
-  const { err, obj } = getArgAndCheck(ctx.request.body, ['+name', '+password'])
+  const { err, obj } = getArgAndCheck(ctx.request['body'], ['+name', '+password'])
   if(err){
     res.message = err
     return ctx.body = res
@@ -40,7 +40,7 @@ login.put('/', async ctx => {
     status: -1,
     message: 'service error'
   }
-  const arg = getArgAndCheck(ctx.request.body, ['+name', '+password']);
+  const arg = getArgAndCheck(ctx.request['body'], ['+name', '+password']);
   if(arg.err){
     res.message = arg.err
     return ctx.body = res 
