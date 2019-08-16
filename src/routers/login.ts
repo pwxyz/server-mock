@@ -4,16 +4,14 @@ import User from './../models/User';
 import getArgAndCheck from './../utils/getArgAndCheck';
 import encrypt from '../utils/encrypt';
 import { signJwt } from '../utils/jsonwebtoken';
+import createCommonRes from '../utils/createCommonRes';
 
 const login = new Router({ prefix: 'login' });
 
 
 
 login.post('/', async ctx => {
-  let res = {
-    status: -1,
-    message: 'service error'
-  }
+  let res = createCommonRes()
   const { err, obj } = getArgAndCheck(ctx.request['body'], ['+name', '+password'])
   if(err){
     res.message = err
@@ -36,10 +34,7 @@ login.post('/', async ctx => {
 
 
 login.put('/', async ctx => {
-  let res = {
-    status: -1,
-    message: 'service error'
-  }
+  let res = createCommonRes()
   const arg = getArgAndCheck(ctx.request['body'], ['+name', '+password']);
   if(arg.err){
     res.message = arg.err

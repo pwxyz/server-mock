@@ -4,15 +4,13 @@ import getArgAndCheck from '../utils/getArgAndCheck';
 import Api from './../models/Api';
 import Project from './../models/Project';
 import request from '../utils/request'
+import createCommonRes from '../utils/createCommonRes';
 
 
 const api = new Router({ prefix: 'api' });
 
 api.post('/', async ctx => {
-  let res = {
-    status: -1,
-    message: 'service error'
-  }
+  let res = createCommonRes()
   const { err, obj } = getArgAndCheck(ctx.request['body'], ['+router', '+method', 'headers', 'req', 'res', '+belongTo'])
   if(err){
     res.message = err;
@@ -31,13 +29,52 @@ api.post('/', async ctx => {
   }
   return ctx.body = res
 })
+//获取所有api，或者是某个项目的所有api
+api.get('/', async ctx => {
+  let res = createCommonRes()
+  const { err, obj } = getArgAndCheck(ctx.request.query, ['id'])
+  if(err){
+    res.message = err;
+    return ctx.body = res 
+  }
+  let allApi = null 
+  if(obj['id']){
+    allApi = await Api.find({ belongTo: obj['id'] })
+  }
+  else {
+    allApi = await Api.find()
+  }
+
+  if(allApi){
+    res = createCommonRes({ payload: { data: allApi }, message: '获取成功' })
+  }
+
+  return ctx.body = res
+})
+
+//获取单个的api
+api.get('/:apiId', async ctx => {
+  let res = createCommonRes()
+  let apiId = ctx.params['apiId']
+  if(!apiId){
+    res.message = '缺少必要的参数id'
+    return ctx.body = res 
+  }
+  let apis = await Api.findById(apiId)
+  if(apis){
+    res.message = '获取成功'
+    res.status = 1
+    res['payload'] = {
+      data: apis
+    }
+  }
+
+  return ctx.body = res 
+})
 
 
 api.put('/:id', async ctx => {
-  let res = {
-    status: -1,
-    message: 'service error'
-  }
+  let res = createCommonRes()
   const { err, obj } = getArgAndCheck(ctx.request['body'], ['+router', '+method', 'headers', 'req', 'res', '+belongTo'])
   if(err){
     res.message = err;
@@ -59,10 +96,7 @@ api.put('/:id', async ctx => {
 
 // 此处为自动添加路由，默认headers中只有access-token
 api.all('/auto/:projectId/:router*', async ctx => {
-  let resObj = {
-    status: -1,
-    message: 'service error'
-  }
+  let resObj = createCommonRes()
   const { router, projectId } = ctx.params
   const method = ctx.method
   let belongTo = projectId

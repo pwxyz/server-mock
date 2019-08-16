@@ -2,16 +2,14 @@
 import * as Router from 'koa-router';
 import getArgAndCheck from '../utils/getArgAndCheck';
 import Project from './../models/Project';
+import createCommonRes from './../utils/createCommonRes';
 
 
 const project = new Router({ prefix:'project' })
 
 
 project.post('/', async ctx => {
-  let res = {
-    status: -1,
-    message: 'service error'
-  }
+  let res = createCommonRes()
   const { err, obj } = getArgAndCheck(ctx.request['body'], ['+name', 'description', 'testUrl'])
   if(err){
     res.message = err ;
@@ -19,7 +17,6 @@ project.post('/', async ctx => {
   }
 
   let project = await Project.findOne({ name: obj['name'] })
-  console.log(project, obj)
   if(project&&project['name']){
     res.message = '该项目名称已存在'
     res.status =1
@@ -35,12 +32,34 @@ project.post('/', async ctx => {
   }
   return ctx.body = res
 })
+//获取项目,如果存在projectid，则只获取其中一个
+project.get('/', async ctx => {
+  let res = createCommonRes()
+  const { err, obj } = getArgAndCheck(ctx.request.query, ['id'])
+  if(err){
+    res.message = err;
+    return ctx.body = res
+  }
+  let allProject = null
+  if(obj['id']){
+    allProject =  await Project.findById(obj['id']);
+  }
+  else {
+    allProject =  await Project.find();
+  }
+  if(allProject){
+    res['payload'] = {
+      data: allProject
+    }
+    res.message = '获取成功'
+    res.status = 1
+  }
+  return ctx.body = res 
+})
+
 
 project.put('/:id', async ctx => {
-  let res = {
-    status: -1,
-    message: 'service error'
-  }
+  let res = createCommonRes()
   const { err, obj } = getArgAndCheck(ctx.request['body'], ['name', 'description', '+id', 'testUrl' ])
   if(err){
     res.message = err ;
