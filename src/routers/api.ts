@@ -1,5 +1,5 @@
 
-import * as Router from 'koa-router';
+import Router from 'koa-router';
 import getArgAndCheck from '../utils/getArgAndCheck';
 import Api from './../models/Api';
 import Project from './../models/Project';

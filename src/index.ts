@@ -1,10 +1,9 @@
 
-import * as Koa from 'koa';
-import * as Cors from 'koa-cors';
-import * as body from 'koa-body';
-import * as dotenv from 'dotenv';
-import cache from './middleware/cache';
-import * as path from 'path';
+import Koa from 'koa';
+import Cors from 'koa-cors';
+import body from 'koa-body';
+import  dotenv from 'dotenv';
+import  path from 'path';
 import router from './routers';
 
 import catchErr from './middleware/catchErr'
@@ -31,7 +30,6 @@ app.use(body({
   }
 }));
 // app.use(body());
-app.use(cache);
 app.use(router.routes());
 app.use(router.allowedMethods());
 

@@ -1,6 +1,6 @@
 
 
-import * as axios from 'axios'
+import  axios from 'axios'
 
 // let arg = {
 //   url: 'http:172.31.50/sign',

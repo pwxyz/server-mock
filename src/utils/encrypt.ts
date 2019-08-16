@@ -1,6 +1,6 @@
 
 
-import * as crypto from 'crypto'
+import crypto from 'crypto'
 
 const initKey = () => process.env.CRYPT_KEY || 'key'
 

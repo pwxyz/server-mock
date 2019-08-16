@@ -1,5 +1,5 @@
 
-import * as Router from 'koa-router';
+import Router from 'koa-router';
 import User from './../models/User';
 import getArgAndCheck from './../utils/getArgAndCheck';
 import encrypt from '../utils/encrypt';

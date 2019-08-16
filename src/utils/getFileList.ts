@@ -1,5 +1,5 @@
 
-import * as fs from 'fs';
+import  fs from 'fs';
 
 const getFileList = (path: fs.PathLike) => {
   const arr = fs.readdirSync(path).filter(i => !i.includes('index') && !/.map$/.test(i));

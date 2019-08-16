@@ -1,5 +1,5 @@
 
-import * as Router from 'koa-router';
+import Router from 'koa-router';
 import getFileList from '../utils/getFileList';
 
 const router = new Router();

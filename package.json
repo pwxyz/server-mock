@@ -6,8 +6,9 @@
   "author": "pwxyz",
   "license": "MIT",
   "scripts": {
-    "start": "node dist/src/index.js",
+    "start": "node dist/index.js",
     "dev": "nodemon --watch src --exec ts-node ./src/index.ts",
+    "build": "tsc src/*",
     "test": "jest"
   },
   "nodemonConfig": {
@@ -16,6 +17,7 @@
     ]
   },
   "dependencies": {
+    "@types/jsonwebtoken": "^8.3.3",
     "@types/koa": "^2.0.48",
     "@types/koa-router": "^7.0.39",
     "@types/mongoose": "^5.3.20",
@@ -35,7 +37,9 @@
     "redis": "^2.8.0"
   },
   "devDependencies": {
+    "@types/dotenv": "^6.1.1",
     "@types/jest": "^24.0.6",
+    "@types/koa-cors": "^0.0.0",
     "@types/redis": "^2.8.10",
     "eslint": "^6.1.0",
     "eslint-config-alloy": "^1.4.2",

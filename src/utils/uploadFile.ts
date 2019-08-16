@@ -1,9 +1,9 @@
 
 // 地址  https://chenshenhai.github.io/koa2-note/note/upload/simple.html
-import * as Busboy from 'busboy';
+import  Busboy from 'busboy';
 import { inspect } from 'util';
-import * as path from 'path';
-import * as fs from 'fs';
+import  path from 'path';
+import  fs from 'fs';
 
 
 // const makdirSync = (diranme) => {
