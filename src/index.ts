@@ -1,9 +1,10 @@
 
 import Koa from 'koa';
-import Cors from 'koa-cors';
+import cors from 'koa-cors';
+// import cors from '@koa/cors'
 import body from 'koa-body';
-import  dotenv from 'dotenv';
-import  path from 'path';
+import dotenv from 'dotenv';
+import path from 'path';
 import router from './routers';
 
 import catchErr from './middleware/catchErr'
@@ -16,15 +17,15 @@ require('./db');
 const app = new Koa();
 const port = process.env.PORT || 3364;
 
+app.use(cors());
 app.use(catchErr)
 app.use(decryptToken)
-app.use(Cors());
 app.use(body({
   multipart: true,
   formidable: {
     uploadDir: path.join(__dirname, '/uploads'),
     hash: 'md5',
-    onFileBegin: function(name, file) {
+    onFileBegin: function (name, file) {
       file.path += file.name;
     }
   }
