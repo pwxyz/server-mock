@@ -12,14 +12,14 @@ const api = new Router({ prefix: 'api' });
 api.post('/', async ctx => {
   let res = createCommonRes()
   const { err, obj } = getArgAndCheck(ctx.request['body'], ['+router', '+method', 'headers', 'req', 'res', '+belongTo'])
-  if(err){
+  if (err) {
     res.message = err;
     return ctx.body = res
   }
   let apis = await Api.findOne({ router: obj['router'], method: obj['method'] });
-  if(apis&&apis['router']){
+  if (apis && apis['router']) {
     res.message = `该router下的method已存在`
-    return ctx.body = res 
+    return ctx.body = res
   }
   apis = await Api.create(obj)
   res.status = 1;
@@ -33,19 +33,19 @@ api.post('/', async ctx => {
 api.get('/', async ctx => {
   let res = createCommonRes()
   const { err, obj } = getArgAndCheck(ctx.request.query, ['id'])
-  if(err){
+  if (err) {
     res.message = err;
-    return ctx.body = res 
+    return ctx.body = res
   }
-  let allApi = null 
-  if(obj['id']){
+  let allApi = null
+  if (obj['id']) {
     allApi = await Api.find({ belongTo: obj['id'] })
   }
   else {
     allApi = await Api.find()
   }
 
-  if(allApi){
+  if (allApi) {
     res = createCommonRes({ payload: { data: allApi }, message: '获取成功' })
   }
 
@@ -56,12 +56,12 @@ api.get('/', async ctx => {
 api.get('/:apiId', async ctx => {
   let res = createCommonRes()
   let apiId = ctx.params['apiId']
-  if(!apiId){
+  if (!apiId) {
     res.message = '缺少必要的参数id'
-    return ctx.body = res 
+    return ctx.body = res
   }
   let apis = await Api.findById(apiId)
-  if(apis){
+  if (apis) {
     res.message = '获取成功'
     res.status = 1
     res['payload'] = {
@@ -69,25 +69,25 @@ api.get('/:apiId', async ctx => {
     }
   }
 
-  return ctx.body = res 
+  return ctx.body = res
 })
 
 
 api.put('/:id', async ctx => {
   let res = createCommonRes()
   const { err, obj } = getArgAndCheck(ctx.request['body'], ['+router', '+method', 'headers', 'req', 'res', '+belongTo'])
-  if(err){
+  if (err) {
     res.message = err;
     return ctx.body = res
   }
   let id = ctx.params['id']
   obj['updatedAt'] = Number(new Date())
-  let apis = await Api.findByIdAndUpdate(id, obj, { new:true })
-  if(apis&&apis['_id']){
+  let apis = await Api.findByIdAndUpdate(id, obj, { new: true })
+  if (apis && apis['_id']) {
     res.message = '修改成功',
-    res.status = 1
+      res.status = 1
     res['payload'] = {
-      api:apis
+      api: apis
     }
   }
 
@@ -101,36 +101,36 @@ api.all('/auto/:projectId/:router*', async ctx => {
   const method = ctx.method
   let belongTo = projectId
   const headers = {
-    "access-token":"this is token"
+    "access-token": "this is token"
   }
   const req = { ...ctx.request.query, ...ctx.request['body'] }
-  let projectArg =  await Project.findById(projectId)
+  let projectArg = await Project.findById(projectId)
 
   let haveApi = await Api.findOne({ router, method, belongTo })
 
-  if(haveApi){
+  if (haveApi) {
     resObj.status = 1
     resObj.message = `在该项目中，${router}下的${method}方法已存在，不再进行添加，如要修改，可以进行单独编辑`
     return ctx.body = resObj
   }
-  
-  if(projectArg&&projectArg['testUrl']){
-    let url = projectArg['testUrl']+router
-    
+
+  if (projectArg && projectArg['testUrl']) {
+    let url = projectArg['testUrl'] + router
+
     // let res = await axios[method.toLowerCase()](projectArg['testUrl']+router, req)
-    let res = await request({ url: projectArg['testUrl']+router, method: method.toLowerCase(), req })
-    console.log(res)
-    if(res){
+    let res = await request({ url: projectArg['testUrl'] + router, method: method.toLowerCase(), req })
+    // console.log(res)
+    if (res) {
       let obj = { router, method, headers, req, res, belongTo }
       let newprject = await Api.create(obj)
-      resObj.status =1
-      resObj.message ='新增api成功'
+      resObj.status = 1
+      resObj.message = '新增api成功'
       resObj['payload'] = newprject
       return ctx.body = resObj
     }
   }
   return ctx.body = resObj
 
-} )
+})
 
 export default api

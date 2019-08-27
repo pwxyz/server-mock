@@ -3,7 +3,7 @@ import { verifyJwt } from '../utils/jsonwebtoken'
 
 const decryptToken = async (ctx, next) => {
   let url = ctx.url;
-  console.log(ctx)
+  // console.log(ctx)
   if (ctx.method === 'GET') {
     //get请求不校验token
     return next()
