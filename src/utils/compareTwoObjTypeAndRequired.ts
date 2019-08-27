@@ -12,8 +12,11 @@ const compareTwoObjTypeAndRequire = (obj: object, arg: object) => {
       if (!(newKey in obj)) {
         errMsgArr.push(`${newKey} 不存在`)
       }
+      if (!checkValueTypeEqual(obj[newKey], arg[key])) {
+        errMsgArr.push(`${newKey} 类型不正确`)
+      }
     }
-    if (!checkValueTypeEqual(obj[newKey], arg[key])) {
+    if (obj[newKey] && !checkValueTypeEqual(obj[newKey], arg[key])) {
       errMsgArr.push(`${newKey} 类型不正确`)
     }
 
