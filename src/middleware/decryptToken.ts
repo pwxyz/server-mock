@@ -4,11 +4,11 @@ import { verifyJwt } from '../utils/jsonwebtoken'
 const decryptToken = async (ctx, next) => {
   let url = ctx.url;
   // console.log(ctx)
-  if (ctx.method === 'GET') {
+  if (ctx.method === 'GET' || /^\/mock./.test(url)) {
     //get请求不校验token
     return next()
   }
-  if (!(/login/.test(url))) {
+  if (!(/^\/login$/.test(url))) {
     let token = ctx.headers['access-token']
     if (!token) {
       return ctx.body = {

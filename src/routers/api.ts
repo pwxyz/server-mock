@@ -39,10 +39,10 @@ api.get('/', async ctx => {
   }
   let allApi = null
   if (obj['id']) {
-    allApi = await Api.find({ belongTo: obj['id'] })
+    allApi = await Api.find({ belongTo: obj['id'] }).sort('-updatedAt')
   }
   else {
-    allApi = await Api.find()
+    allApi = await Api.find().sort('updatedAt')
   }
 
   if (allApi) {
@@ -95,42 +95,42 @@ api.put('/:id', async ctx => {
 })
 
 // 此处为自动添加路由，默认headers中只有access-token
-api.all('/auto/:projectId/:router*', async ctx => {
-  let resObj = createCommonRes()
-  const { router, projectId } = ctx.params
-  const method = ctx.method
-  let belongTo = projectId
-  const headers = {
-    "access-token": "this is token"
-  }
-  const req = { ...ctx.request.query, ...ctx.request['body'] }
-  let projectArg = await Project.findById(projectId)
+// api.all('/auto/:projectId/:router*', async ctx => {
+//   let resObj = createCommonRes()
+//   const { router, projectId } = ctx.params
+//   const method = ctx.method
+//   let belongTo = projectId
+//   const headers = {
+//     "access-token": "this is token"
+//   }
+//   const req = { ...ctx.request.query, ...ctx.request['body'] }
+//   let projectArg = await Project.findById(projectId)
 
-  let haveApi = await Api.findOne({ router, method, belongTo })
+//   let haveApi = await Api.findOne({ router, method, belongTo })
 
-  if (haveApi) {
-    resObj.status = 1
-    resObj.message = `在该项目中，${router}下的${method}方法已存在，不再进行添加，如要修改，可以进行单独编辑`
-    return ctx.body = resObj
-  }
+//   if (haveApi) {
+//     resObj.status = 1
+//     resObj.message = `在该项目中，${router}下的${method}方法已存在，不再进行添加，如要修改，可以进行单独编辑`
+//     return ctx.body = resObj
+//   }
 
-  if (projectArg && projectArg['testUrl']) {
-    let url = projectArg['testUrl'] + router
+//   if (projectArg && projectArg['testUrl']) {
+//     let url = projectArg['testUrl'] + router
 
-    // let res = await axios[method.toLowerCase()](projectArg['testUrl']+router, req)
-    let res = await request({ url: projectArg['testUrl'] + router, method: method.toLowerCase(), req })
-    // console.log(res)
-    if (res) {
-      let obj = { router, method, headers, req, res, belongTo }
-      let newprject = await Api.create(obj)
-      resObj.status = 1
-      resObj.message = '新增api成功'
-      resObj['payload'] = newprject
-      return ctx.body = resObj
-    }
-  }
-  return ctx.body = resObj
+//     // let res = await axios[method.toLowerCase()](projectArg['testUrl']+router, req)
+//     let res = await request({ url: projectArg['testUrl'] + router, method: method.toLowerCase(), req })
+//     // console.log(res)
+//     if (res) {
+//       let obj = { router, method, headers, req, res, belongTo }
+//       let newprject = await Api.create(obj)
+//       resObj.status = 1
+//       resObj.message = '新增api成功'
+//       resObj['payload'] = newprject
+//       return ctx.body = resObj
+//     }
+//   }
+//   return ctx.body = resObj
 
-})
+// })
 
 export default api

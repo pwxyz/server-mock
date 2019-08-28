@@ -32,6 +32,16 @@ login.post('/', async ctx => {
   return ctx.body = res
 });
 
+login.post('/verify', async ctx => {
+  let res = createCommonRes()
+  res.status = 1
+  res.message = 'token 有效'
+  res['payload'] = {
+    isLogin: true
+  }
+  return ctx.body = res
+})
+
 
 login.put('/', async ctx => {
   let res = createCommonRes()
