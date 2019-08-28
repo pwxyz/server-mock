@@ -42,4 +42,6 @@ it('test  compareTwoObjTypeAndRequire', () => {
   expect(compareTwoObjTypeAndRequire(obj1, obj6).err).toBeFalsy()
   expect(compareTwoObjTypeAndRequire(obj1, obj7).err).toBeFalsy()
   expect(compareTwoObjTypeAndRequire(obj1, obj8).err).toBeTruthy()
+  expect(compareTwoObjTypeAndRequire(obj1, {}).err).toBeFalsy()
+  expect(compareTwoObjTypeAndRequire(obj1, { "xx?": "54" }).err).toBeFalsy()
 })
