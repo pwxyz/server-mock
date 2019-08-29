@@ -32,7 +32,7 @@ api.post('/', async ctx => {
 //获取所有api，或者是某个项目的所有api
 api.get('/', async ctx => {
   let res = createCommonRes()
-  const { err, obj } = getArgAndCheck(ctx.request.query, ['id'])
+  const { err, obj } = getArgAndCheck(ctx.state.query, ['id'])
   if (err) {
     res.message = err;
     return ctx.body = res
@@ -68,7 +68,7 @@ api.get('/:apiId', async ctx => {
       data: apis
     }
   }
-
+  res.message = 'id不正确'
   return ctx.body = res
 })
 
@@ -103,7 +103,7 @@ api.put('/:id', async ctx => {
 //   const headers = {
 //     "access-token": "this is token"
 //   }
-//   const req = { ...ctx.request.query, ...ctx.request['body'] }
+//   const req = { ...ctx.state.query, ...ctx.request['body'] }
 //   let projectArg = await Project.findById(projectId)
 
 //   let haveApi = await Api.findOne({ router, method, belongTo })

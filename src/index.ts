@@ -9,6 +9,7 @@ import router from './routers';
 
 import catchErr from './middleware/catchErr'
 import decryptToken from './middleware/decryptToken';
+import transformQuery from './middleware/transformQuery';
 
 dotenv.config();
 
@@ -22,6 +23,7 @@ app.use(catchErr)
 app.use(decryptToken)
 app.use(body({
   multipart: true,
+  strict: false,
   formidable: {
     uploadDir: path.join(__dirname, '/uploads'),
     hash: 'md5',
@@ -30,7 +32,7 @@ app.use(body({
     }
   }
 }));
-// app.use(body());
+app.use(transformQuery);
 app.use(router.routes());
 app.use(router.allowedMethods());
 

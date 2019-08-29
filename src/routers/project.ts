@@ -35,7 +35,7 @@ project.post('/', async ctx => {
 //获取项目,如果存在projectid，则只获取其中一个
 project.get('/', async ctx => {
   let res = createCommonRes()
-  const { err, obj } = getArgAndCheck(ctx.request.query, ['id'])
+  const { err, obj } = getArgAndCheck(ctx.state.query, ['id'])
   if (err) {
     res.message = err;
     return ctx.body = res

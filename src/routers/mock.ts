@@ -18,12 +18,11 @@ mock.get('/x', async ctx => {
 mock.all('/:projectid/:router*', async ctx => {
   let res = createCommonRes();
   let method = ctx.method;
-  let arg = ['GET', 'DELETE'].includes(method) ? ctx.request.query : ctx.request['body']
+  let arg = ['GET', 'DELETE'].includes(method) ? ctx.state.query : ctx.request['body']
 
 
   let projectid = ctx.params['projectid']
   let router = '/' + ctx.params['router']
-  console.log(JSON.stringify(arg), method, router)
   //查询当前项目、当前路由下是否存在该方法
   let apiArg = await Api.findOne({ belongTo: projectid, method, router })
   let projectArg = null
@@ -47,7 +46,6 @@ mock.all('/:projectid/:router*', async ctx => {
 
         let apires = await request({ url: projectArg['testUrl'] + router, method: getMethod(method), data: arg })
         if (apires) {
-          console.log('apires', apires)
           let obj = {
             router,
             method,
