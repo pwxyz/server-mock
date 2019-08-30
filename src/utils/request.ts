@@ -15,7 +15,7 @@ const qsArrToString = (obj: {}) => {
   let newObj = {}
   for (let key in obj) {
     if (isArray(obj[key])) {
-      newObj[key] = String[obj[key]]
+      newObj[key] = String(obj[key])
     }
     else {
       newObj[key] = obj[key]
