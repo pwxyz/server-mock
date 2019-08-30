@@ -72,6 +72,24 @@ api.get('/:apiId', async ctx => {
   return ctx.body = res
 })
 
+//获取单个的api
+api.delete('/:apiId', async ctx => {
+  let res = createCommonRes()
+  let apiId = ctx.params['apiId']
+  if (!apiId) {
+    res.message = '缺少必要的参数id'
+    return ctx.body = res
+  }
+  let apis = await Api.findByIdAndDelete(apiId)
+  if (apis) {
+    res.message = '删除成功'
+    res.status = 1
+    return ctx.body = res
+  }
+  res.message = '错误的id'
+  return ctx.body = res
+})
+
 
 api.put('/:id', async ctx => {
   let res = createCommonRes()
