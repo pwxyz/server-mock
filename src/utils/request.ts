@@ -2,6 +2,7 @@
 
 import axios from 'axios'
 import qs from 'querystring'
+import { isArray } from 'lodash';
 
 interface Arg {
   method: 'get' | 'post' | 'delete' | 'put',
@@ -10,10 +11,23 @@ interface Arg {
   headers?: object
 }
 
+const qsArrToString = (obj: {}) => {
+  let newObj = {}
+  for (let key in obj) {
+    if (isArray(obj[key])) {
+      newObj[key] = String[obj[key]]
+    }
+    else {
+      newObj[key] = obj[key]
+    }
+  }
+  return newObj
+}
+
 const request = async (arg: Arg) => {
   let url = arg.url
   let needQs = ['get', 'delete'].includes(arg.method)
-  url += needQs && arg.data ? '?' + qs.stringify(arg.data) : ''
+  url += needQs && arg.data ? '?' + qs.stringify(qsArrToString(arg.data)) : ''
   let obj: Arg = {
     method: arg.method,
     url,

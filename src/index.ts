@@ -23,7 +23,6 @@ app.use(catchErr)
 app.use(decryptToken)
 app.use(body({
   multipart: true,
-  strict: false,
   formidable: {
     uploadDir: path.join(__dirname, '/uploads'),
     hash: 'md5',
