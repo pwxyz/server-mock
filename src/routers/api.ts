@@ -11,7 +11,7 @@ const api = new Router({ prefix: 'api' });
 
 api.post('/', async ctx => {
   let res = createCommonRes()
-  const { err, obj } = getArgAndCheck(ctx.request['body'], ['+router', '+method', 'headers', 'req', 'res', '+belongTo'])
+  const { err, obj } = getArgAndCheck(ctx.request['body'], ['+router', '+method', 'headers', 'req', 'res', '+belongTo', 'remark'])
   if (err) {
     res.message = err;
     return ctx.body = res
@@ -93,7 +93,7 @@ api.delete('/:apiId', async ctx => {
 
 api.put('/:id', async ctx => {
   let res = createCommonRes()
-  const { err, obj } = getArgAndCheck(ctx.request['body'], ['+router', '+method', 'headers', 'req', 'res', '+belongTo'])
+  const { err, obj } = getArgAndCheck(ctx.request['body'], ['+router', '+method', 'headers', 'req', 'res', 'remark'])
   if (err) {
     res.message = err;
     return ctx.body = res
