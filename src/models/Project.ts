@@ -7,7 +7,11 @@ const ProjectSchema = new Schem({
   description: { type: String },
   testUrl: { type: String },
   allowAdd: { type: Boolean, default: true },
-  createdAt: { type: Number, default: Number(new Date()) },
+  createdAt: {
+    type: Number, default: function () {
+      return Number(new Date())
+    }
+  },
   updatedAt: { type: Number, default: function () { return this.createdAt } }
 })
 

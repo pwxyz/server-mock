@@ -12,7 +12,11 @@ const ApiSchema = new Schema({
   headers: { type: Object },
   req: { type: Object },
   res: { type: Object },
-  createdAt: { type: Number, default: Number(new Date()) },
+  createdAt: {
+    type: Number, default: function () {
+      return Number(new Date())
+    }
+  },
   updatedAt: { type: Number, default: function () { return this.createdAt } }
 })
 

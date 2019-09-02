@@ -11,6 +11,7 @@ const api = new Router({ prefix: 'api' });
 
 api.post('/', async ctx => {
   let res = createCommonRes()
+  console.log(new Date())
   const { err, obj } = getArgAndCheck(ctx.request['body'], ['+router', '+method', 'headers', 'req', 'res', '+belongTo', 'remark'])
   if (err) {
     res.message = err;
