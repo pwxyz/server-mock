@@ -51,6 +51,7 @@ mock.all('/:projectid/:router*', async ctx => {
             method,
             req: arg,
             res: apires,
+            noused: true,  //目前自动入库的将自动标记不使用，如需使用，需要手动改回来
             belongTo: projectid
           }
           let newapi = await Api.create(obj)
