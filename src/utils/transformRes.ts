@@ -15,9 +15,17 @@ const getNewObj = (obj, arg) => {
     let newKey = limitKey(key)
     let value = ((newKey in arg) && arg[newKey]) ? arg[newKey] : obj[key]
     let newValue = isArray(value) ? value.map(i => getNewObj(i, arg)) : isObject(value, arg) ? getNewObj(value, arg) : value
-    newObj[newKey] = newValue
+    newObj[newKey] = transValue(newValue)
   }
   return newObj
+}
+
+const transValue = value => {
+  if (typeof value === 'string') {
+    let arr = value.split('|')
+    return arr[0]
+  }
+  else return value
 }
 
 const limitKey = (key: string) => key && key.split('|')[0]
