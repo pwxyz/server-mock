@@ -20,7 +20,7 @@ login.post('/', async ctx => {
   let user = await User.findOne({ name: obj['name'] });
   let password = encrypt(obj['password'])
   if(!user||!user['name']||user['password']!==password){
-    res.message = '该用户名不存在或者密码不正确'
+    res.message = '該用戶名不存在或者密碼不正確'
     return ctx.body = res
   }
   let token = signJwt({ id: user['_id'], name: user['name']  })
@@ -28,7 +28,7 @@ login.post('/', async ctx => {
     token
   }
   res.status = 1
-  res.message = '登陆成功'
+  res.message = '登陸成功'
   return ctx.body = res
 });
 
@@ -43,7 +43,7 @@ login.put('/', async ctx => {
   let obj = arg.obj
   let user = await User.findOne({ name: obj['name'] })
   if(user&&user['name']){
-    res.message = '该用户已存在';
+    res.message = '該用戶已存在';
     return ctx.body = res 
   }
   let password = encrypt(obj['password'])
@@ -56,7 +56,7 @@ login.put('/', async ctx => {
     token
   }
   res.status = 1
-  res.message = '用户创建成功'
+  res.message = '用戶創建成功'
   return ctx.body = res
 })
 

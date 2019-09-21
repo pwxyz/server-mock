@@ -23,7 +23,7 @@ const decryptToken = async (ctx, next) => {
         console.log(err&&err.name , err&&err.message)
         return ctx.body={
           status:1,
-          message: 'token不正确'
+          message: 'token不正確'
         }
       }
     }

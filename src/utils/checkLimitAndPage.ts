@@ -10,7 +10,7 @@ const checkLimitAndPage = (limit, page) => {
   }
   else {
     return {
-      err: 'limit或者page应该为整数且均大于一'
+      err: 'limit或者page應該為整數且均大於一'
     };
   }
 };

@@ -18,13 +18,13 @@ project.post('/', async ctx => {
 
   let project = await Project.findOne({ name: obj['name'] })
   if(project&&project['name']){
-    res.message = '该项目名称已存在'
+    res.message = '該項目名稱已存在'
     res.status =1
     return ctx.body = res 
   }
   let data = await Project.create(obj)
   if(data&&data['name']){
-    res.message = '创建成功'
+    res.message = '創建成功'
     res.status = 1
     res['payload'] = {
       project: data
@@ -32,7 +32,7 @@ project.post('/', async ctx => {
   }
   return ctx.body = res
 })
-//获取项目,如果存在projectid，则只获取其中一个
+//獲取項目,如果存在projectid，則只獲取其中一個
 project.get('/', async ctx => {
   let res = createCommonRes()
   const { err, obj } = getArgAndCheck(ctx.request.query, ['id'])
@@ -51,7 +51,7 @@ project.get('/', async ctx => {
     res['payload'] = {
       data: allProject
     }
-    res.message = '获取成功'
+    res.message = '獲取成功'
     res.status = 1
   }
   return ctx.body = res 

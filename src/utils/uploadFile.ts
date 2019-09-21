@@ -34,7 +34,7 @@ const uploadFile = (ctx, { pathName }) => {
     };
 
     busboy.on('file', function(filedname, file, filename, encoding, mimeType) {
-      console.log('开始', filedname, file, filename, encoding, mimeType);
+      console.log('開始', filedname, file, filename, encoding, mimeType);
       let fileName = Math.random().toString(16).substr(2) + '.' + getSuffixName(filename);
       let _uploadFilePath = path.join(pathName, fileName);
       let saveTo = path.join(_uploadFilePath);
@@ -43,35 +43,35 @@ const uploadFile = (ctx, { pathName }) => {
 
       file.on('end', function() {
         result.success = true;
-        result['message'] = '上传成功';
-        console.log('上传成功');
+        result['message'] = '上傳成功';
+        console.log('上傳成功');
         resolve(result);
       });
 
       file.on('error', function() {
         result.success = false;
-        result['message'] = '上传失败';
-        console.log('上传失败');
+        result['message'] = '上傳失敗';
+        console.log('上傳失敗');
         reject(result);
       });
 
     });
 
-    // 解析表单中其他字段信息
+    // 解析表單中其他字段信息
     busboy.on('field', function(fieldname, val, fieldnameTruncated, valTruncated, encoding, mimetype) {
-      console.log('表单字段数据 [' + fieldname + ']: value: ' + inspect(val));
+      console.log('表單字段數據 [' + fieldname + ']: value: ' + inspect(val));
       result.formData[fieldname] = inspect(val);
     });
 
-    // 解析结束事件
+    // 解析結束事件
     busboy.on('finish', function() {
-      console.log('文件上结束');
+      console.log('文件上結束');
       resolve(result);
     });
 
-    // 解析错误事件
+    // 解析錯誤事件
     busboy.on('error', function() {
-      console.log('文件上出错');
+      console.log('文件上出錯');
       reject(result);
     });
 

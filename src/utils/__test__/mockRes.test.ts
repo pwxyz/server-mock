@@ -5,15 +5,15 @@ it('test mockRes', () => {
   let obj =  {
     'status': {
       'type': 'integer',
-      'description': '请求结果的状态 1表示请求成功 负值表示其他失败的情况',
+      'description': '請求結果的狀態 1表示請求成功 負值表示其他失敗的情況',
       'enum': [
         1, -1
       ]
     },
     'message': {
       'type': 'string',
-      'example': '错误信息',
-      'description': '请求返回的status不为1时 该值为错误的信息内容'
+      'example': '錯誤信息',
+      'description': '請求返回的status不為1時 該值為錯誤的信息內容'
     },
     'data': {
       'type': 'array',
@@ -22,12 +22,12 @@ it('test mockRes', () => {
         "properties": {
           "text": {
             "description": "",
-            "example": "有新的版本信息，请前往升级",
+            "example": "有新的版本信息，請前往升級",
             "type": "string"
           },
           "value": {
             "description": "",
-            "example": "设备管理",
+            "example": "設備管理",
             "type": "string"
           }
         }
@@ -37,15 +37,15 @@ it('test mockRes', () => {
   let objs =  {
     'status': {
       'type': 'integer',
-      'description': '请求结果的状态 1表示请求成功 负值表示其他失败的情况',
+      'description': '請求結果的狀態 1表示請求成功 負值表示其他失敗的情況',
       'enum': [
         1, -1
       ]
     },
     'message': {
       'type': 'string',
-      'example': '错误信息',
-      'description': '请求返回的status不为1时 该值为错误的信息内容'
+      'example': '錯誤信息',
+      'description': '請求返回的status不為1時 該值為錯誤的信息內容'
     },
     'data': {
       'type': 'array',

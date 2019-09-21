@@ -18,18 +18,18 @@ api.post('/', async ctx => {
   }
   let apis = await Api.findOne({ router: obj['router'], method: obj['method'] });
   if(apis&&apis['router']){
-    res.message = `该router下的method已存在`
+    res.message = `該router下的method已存在`
     return ctx.body = res 
   }
   apis = await Api.create(obj)
   res.status = 1;
-  res.message = '创建成功';
+  res.message = '創建成功';
   res['payload'] = {
     api: apis
   }
   return ctx.body = res
 })
-//获取所有api，或者是某个项目的所有api
+//獲取所有api，或者是某個項目的所有api
 api.get('/', async ctx => {
   let res = createCommonRes()
   const { err, obj } = getArgAndCheck(ctx.request.query, ['id'])
@@ -46,23 +46,23 @@ api.get('/', async ctx => {
   }
 
   if(allApi){
-    res = createCommonRes({ payload: { data: allApi }, message: '获取成功' })
+    res = createCommonRes({ payload: { data: allApi }, message: '獲取成功' })
   }
 
   return ctx.body = res
 })
 
-//获取单个的api
+//獲取單個的api
 api.get('/:apiId', async ctx => {
   let res = createCommonRes()
   let apiId = ctx.params['apiId']
   if(!apiId){
-    res.message = '缺少必要的参数id'
+    res.message = '缺少必要的參數id'
     return ctx.body = res 
   }
   let apis = await Api.findById(apiId)
   if(apis){
-    res.message = '获取成功'
+    res.message = '獲取成功'
     res.status = 1
     res['payload'] = {
       data: apis
@@ -94,7 +94,7 @@ api.put('/:id', async ctx => {
   return ctx.body = res
 })
 
-// 此处为自动添加路由，默认headers中只有access-token
+// 此處為自動添加路由，默認headers中只有access-token
 api.all('/auto/:projectId/:router*', async ctx => {
   let resObj = createCommonRes()
   const { router, projectId } = ctx.params
@@ -110,7 +110,7 @@ api.all('/auto/:projectId/:router*', async ctx => {
 
   if(haveApi){
     resObj.status = 1
-    resObj.message = `在该项目中，${router}下的${method}方法已存在，不再进行添加，如要修改，可以进行单独编辑`
+    resObj.message = `在該項目中，${router}下的${method}方法已存在，不再進行添加，如要修改，可以進行單獨編輯`
     return ctx.body = resObj
   }
   
