@@ -21,16 +21,17 @@ const port = process.env.PORT || 3364;
 app.use(cors());
 app.use(catchErr)
 app.use(decryptToken)
-app.use(body({
-  multipart: true,
-  formidable: {
-    uploadDir: path.join(__dirname, '/uploads'),
-    hash: 'md5',
-    onFileBegin: function (name, file) {
-      file.path += file.name;
-    }
-  }
-}));
+// app.use(body({
+//   multipart: true,
+//   formidable: {
+//     uploadDir: path.join(__dirname, '/uploads'),
+//     hash: 'md5',
+//     onFileBegin: function (name, file) {
+//       file.path += file.name;
+//     }
+//   }
+// }));
+app.use(body())
 app.use(transformQuery);
 app.use(router.routes());
 app.use(router.allowedMethods());

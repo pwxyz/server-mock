@@ -23,9 +23,12 @@ mock.all('/:projectid/:router*', async ctx => {
 
   let projectid = ctx.params['projectid']
   let router = '/' + ctx.params['router']
+
+
   //查询当前项目、当前路由下是否存在该方法
   let apiArg = await Api.findOne({ belongTo: projectid, method, router })
   let projectArg = null
+
   if (!apiArg) {
     //如果不存在，查询当前项目信息
     projectArg = await Project.findById(projectid)
