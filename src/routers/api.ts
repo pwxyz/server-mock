@@ -5,6 +5,8 @@ import Api from './../models/Api';
 import Project from './../models/Project';
 import request from '../utils/request'
 import createCommonRes from '../utils/createCommonRes';
+import Tag from '../models/Tag';
+import result from 'lodash/result';
 
 
 const api = new Router({ prefix: 'api' });
@@ -12,7 +14,7 @@ const api = new Router({ prefix: 'api' });
 api.post('/', async ctx => {
   let res = createCommonRes()
   // console.log(new Date())
-  const { err, obj } = getArgAndCheck(ctx.request['body'], ['+router', '+method', 'headers', 'req', 'res', '+belongTo', 'remark', 'noused'])
+  const { err, obj } = getArgAndCheck(ctx.request['body'], ['+router', '+method', 'headers', 'req', 'res', '+belongTo', 'remark', 'noused', 'tag'])
   if (err) {
     res.message = err;
     return ctx.body = res
@@ -39,15 +41,28 @@ api.get('/', async ctx => {
     return ctx.body = res
   }
   let allApi = null
+  let tagList = []
   if (obj['id']) {
-    allApi = await Api.find({ belongTo: obj['id'] }).sort('-updatedAt')
+    allApi = await Api.find({ belongTo: obj['id'] }).populate('tag').sort('-updatedAt')
+    tagList = await Tag.find({ belongTo: obj['id'] })
+    // tagList = tagList.map(i => {
+    //   let obj = { ...i }
+    //   let arr = allApi.filter(item => {
+    //     console.log(item, i)
+    //     return result(item, 'tag._id') === result(i, '_id')
+    //   })
+
+    //   obj['children'] = arr || []
+    //   return obj
+    // })
   }
   else {
-    allApi = await Api.find().sort('updatedAt')
+    allApi = await Api.find().populate('tag').sort('-updatedAt')
   }
 
   if (allApi) {
-    res = createCommonRes({ payload: { data: allApi }, message: '获取成功' })
+    // allApi = allApi.filter(i => !i['tag']) 
+    res = createCommonRes({ payload: { data: allApi, tagList }, message: '获取成功' })
   }
 
   return ctx.body = res
@@ -61,7 +76,7 @@ api.get('/:apiId', async ctx => {
     res.message = '缺少必要的参数id'
     return ctx.body = res
   }
-  let apis = await Api.findById(apiId)
+  let apis = await Api.findById(apiId).populate('tag')
   if (apis) {
     res.message = '获取成功'
     res.status = 1
@@ -94,7 +109,7 @@ api.delete('/:apiId', async ctx => {
 
 api.put('/:id', async ctx => {
   let res = createCommonRes()
-  const { err, obj } = getArgAndCheck(ctx.request['body'], ['+router', '+method', 'headers', 'req', 'res', 'remark', 'noused'])
+  const { err, obj } = getArgAndCheck(ctx.request['body'], ['+router', '+method', 'headers', 'req', 'res', 'remark', 'noused', 'tag'])
   if (err) {
     res.message = err;
     return ctx.body = res

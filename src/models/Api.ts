@@ -7,7 +7,8 @@ const Schema = mongoose.Schema;
 const ApiSchema = new Schema({
   router: { type: String, required: true },
   method: { type: String, required: true },
-  belongTo: { type: mongoose.SchemaTypes.ObjectId, required: true },
+  belongTo: { type: mongoose.SchemaTypes.ObjectId, required: true, ref: 'Project' },
+  tag: { type: mongoose.SchemaTypes.ObjectId, ref: 'Tag' },
   remark: { type: String },
   headers: { type: Object },
   req: { type: Object },
