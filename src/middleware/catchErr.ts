@@ -1,5 +1,5 @@
 import Koa from 'koa'
-import logger from './logger.js'
+import logger from './logger'
 
 const catchErr = async (ctx: Koa.Context, next: () => any) => {
   console.log(new Date(), 'req', ctx.url, ctx.method)
