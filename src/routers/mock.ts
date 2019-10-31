@@ -7,6 +7,7 @@ import request from '../utils/request'
 import transformRes from '../utils/transformRes';
 import compareTwoObjTypeAndRequired from '../utils/compareTwoObjTypeAndRequired';
 import getMethod from '../utils/getMethod'
+import result from 'lodash/result'
 const mock = new Router({ prefix: 'mock' })
 
 mock.get('/x', async ctx => {
@@ -24,14 +25,18 @@ mock.all('/:projectid/:router*', async ctx => {
   let projectid = ctx.params['projectid']
   let router = '/' + ctx.params['router']
 
+  let projectArg = null
+  projectArg = await Project.findById(projectid)
+  let routerPrefix = result(projectArg, 'routerPrefix')
+  router = routerPrefix ? router.replace(routerPrefix, '') : router
 
   //查询当前项目、当前路由下是否存在该方法
   let apiArg = await Api.findOne({ belongTo: projectid, method, router })
-  let projectArg = null
+
 
   if (!apiArg) {
     //如果不存在，查询当前项目信息
-    projectArg = await Project.findById(projectid)
+
     if (!projectArg) {
       res.message = '不存在该项目或者项目ID错误';
       return ctx.body;

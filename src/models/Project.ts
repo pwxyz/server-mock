@@ -7,6 +7,7 @@ const ProjectSchema = new Schem({
   description: { type: String },
   testUrl: { type: String },
   allowAdd: { type: Boolean, default: true },
+  routerPrefix: { type: String },
   createdAt: {
     type: Number, default: function () {
       return Number(new Date())
