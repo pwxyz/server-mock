@@ -8,6 +8,7 @@ import transformRes from '../utils/transformRes';
 import compareTwoObjTypeAndRequired from '../utils/compareTwoObjTypeAndRequired';
 import getMethod from '../utils/getMethod'
 import result from 'lodash/result'
+import transformReq from './../utils/transformReq';
 const mock = new Router({ prefix: 'mock' })
 
 mock.get('/x', async ctx => {
@@ -15,12 +16,31 @@ mock.get('/x', async ctx => {
 })
 
 
+
+const transformArg = (arg = {}) => {
+  try {
+    let obj = {}
+    for (let key in arg) {
+      if (typeof arg[key] === 'object') {
+        obj[decodeURIComponent(key)] = transformArg(arg[key])
+      }
+      else {
+        obj[decodeURIComponent(key)] = decodeURIComponent(arg[key])
+      }
+    }
+    return obj
+  }
+  catch (_) {
+    return arg
+  }
+}
+
 //本部分为核心逻辑
 mock.all('/:projectid/:router*', async ctx => {
   let res = createCommonRes();
   let method = ctx.method;
-  let arg = ['GET', 'DELETE'].includes(method) ? ctx.state.query : ctx.request['body']
-
+  let arg1 = ['GET', 'DELETE'].includes(method) ? transformArg(ctx.state.query) : ctx.request['body']
+  let arg = transformReq({ ...arg1 }) || {}
 
   let projectid = ctx.params['projectid']
   let router = '/' + ctx.params['router']
@@ -74,6 +94,7 @@ mock.all('/:projectid/:router*', async ctx => {
   //校验必须参数
   let { err } = compareTwoObjTypeAndRequired(arg, apiArg['req'])
   if (err) {
+
     res.message = err
     return ctx.body = res
   }
