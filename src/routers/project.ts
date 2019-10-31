@@ -32,7 +32,7 @@ project.post('/', async ctx => {
   }
   return ctx.body = res
 })
-//获取项目,如果存在projectid，则只获取其中一个
+//獲取項目,如果存在projectid，則只獲取其中一個
 project.get('/', async ctx => {
   let res = createCommonRes()
   const { err, obj } = getArgAndCheck(ctx.state.query, ['id'])
@@ -51,7 +51,7 @@ project.get('/', async ctx => {
     res['payload'] = {
       data: allProject
     }
-    res.message = '获取成功'
+    res.message = '獲取成功'
     res.status = 1
   }
   return ctx.body = res

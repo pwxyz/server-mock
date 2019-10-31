@@ -26,13 +26,13 @@ api.post('/', async ctx => {
   }
   apis = await Api.create(obj)
   res.status = 1;
-  res.message = '创建成功';
+  res.message = '創建成功';
   res['payload'] = {
     api: apis
   }
   return ctx.body = res
 })
-//获取所有api，或者是某个项目的所有api
+//獲取所有api，或者是某個項目的所有api
 api.get('/', async ctx => {
   let res = createCommonRes()
   const { err, obj } = getArgAndCheck(ctx.state.query, ['id'])
@@ -61,14 +61,14 @@ api.get('/', async ctx => {
   }
 
   if (allApi) {
-    // allApi = allApi.filter(i => !i['tag']) 
+    // allApi = allApi.filter(i => !i['tag'])
     res = createCommonRes({ payload: { data: allApi, tagList }, message: '获取成功' })
   }
 
   return ctx.body = res
 })
 
-//获取单个的api
+//獲取單個的api
 api.get('/:apiId', async ctx => {
   let res = createCommonRes()
   let apiId = ctx.params['apiId']

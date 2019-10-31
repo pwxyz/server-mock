@@ -46,6 +46,8 @@
     "@types/jest": "^24.0.6",
     "@types/koa-cors": "^0.0.0",
     "@types/redis": "^2.8.10",
+    "chalk": "^2.4.2",
+    "chinese-s2t": "^1.0.0",
     "eslint": "^6.1.0",
     "eslint-config-alloy": "^1.4.2",
     "eslint-plugin-typescript": "^0.14.0",

@@ -1,10 +1,10 @@
 
 /**
- * @ options swagger数据
- * @ res 返回数据为object
- * @ res.project 项目信息参考project模型
- * @ res.tags 参考tags模型
- * @ res.api object[] 数组类型，参考api模型
+ * @ options swagger數據
+ * @ res 返回數據為object
+ * @ res.project 項目信息參考project模型
+ * @ res.tags 參考tags模型
+ * @ res.api object[] 數組類型，參考api模型
  *
  */
 

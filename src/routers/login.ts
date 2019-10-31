@@ -28,7 +28,7 @@ login.post('/', async ctx => {
     token
   }
   res.status = 1
-  res.message = '登陆成功'
+  res.message = '登陸成功'
   return ctx.body = res
 });
 
@@ -66,7 +66,7 @@ login.put('/', async ctx => {
     token
   }
   res.status = 1
-  res.message = '用户创建成功'
+  res.message = '用戶創建成功'
   return ctx.body = res
 })
 
