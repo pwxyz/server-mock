@@ -3,7 +3,7 @@ import getArg from './getArg';
 import { isUndefined } from 'lodash';
 
 /**
- * @ arr +字符串中有此符号的为必须包含的参数
+ * @ arr +字符串中有此符號的為必須包含的參數
  */
 
 const isRequire = (str: string) => /^\+.+/.test(str);
@@ -25,7 +25,7 @@ const getArgAndCheck = (obj: object, arr: string[]) => {
   result.obj = getArg(obj, array);
   let arrays = arrs.filter(i => isUndefined(result.obj[i]));
   if (arrays.length !== 0) {
-    result.err = `缺少必须的参数${arrays}`;
+    result.err = `缺少必須的參數${arrays}`;
     result.obj = {};
   }
 

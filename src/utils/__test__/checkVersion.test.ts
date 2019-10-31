@@ -1,7 +1,7 @@
 
 import checkVersion from '../checkVersion';
 
-it('测试checkVersion', () => {
+it('測試checkVersion', () => {
   let str1 = 'v0.0.1';
   let str2 = 'v0.01.0.0.01';
   let str3 = 'v1.2.3.4.5.6';

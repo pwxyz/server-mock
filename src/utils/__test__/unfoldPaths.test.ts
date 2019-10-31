@@ -8,8 +8,8 @@ it('test unfoldPaths', () => {
         'tags': [
           'strategy'
         ],
-        'summary': '获取威胁类型（攻击行为）',
-        'description': '获取威胁类型（攻击行为）',
+        'summary': '獲取威脅類型（攻擊行為）',
+        'description': '獲取威脅類型（攻擊行為）',
         'consumes': [
           'application/json'
         ],
@@ -21,7 +21,7 @@ it('test unfoldPaths', () => {
             'in': 'header',
             'name': 'access-token',
             'type': 'string',
-            'description': '用户验证用户请求权限的密令',
+            'description': '用戶驗證用戶請求權限的密令',
             'required': true
           }
         ],
@@ -59,13 +59,13 @@ it('test unfoldPaths', () => {
   expect(objArg.path).toEqual('/login');
   expect(objArg.method).toEqual('get');
   expect(objArg.tag).toEqual('strategy');
-  expect(objArg.description).toEqual('获取威胁类型（攻击行为）');
+  expect(objArg.description).toEqual('獲取威脅類型（攻擊行為）');
   expect(objArg.req).toEqual([
     {
       'in': 'header',
       'name': 'access-token',
       'type': 'string',
-      'description': '用户验证用户请求权限的密令',
+      'description': '用戶驗證用戶請求權限的密令',
       'required': true
     }
   ]);

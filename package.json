@@ -8,7 +8,7 @@
   "scripts": {
     "start": "node dist/index.js",
     "dev": "nodemon --watch src --exec ts-node ./src/index.ts",
-    "build": "tsc src/*",
+    "build": "tsc",
     "test": "jest"
   },
   "nodemonConfig": {
@@ -17,6 +17,7 @@
     ]
   },
   "dependencies": {
+    "@koa/cors": "2",
     "@types/jsonwebtoken": "^8.3.3",
     "@types/koa": "^2.0.48",
     "@types/koa-router": "^7.0.39",
@@ -24,6 +25,7 @@
     "axios": "^0.19.0",
     "babel-eslint": "^10.0.1",
     "busboy": "^0.3.0",
+    "chinese-s2t": "^1.0.0",
     "dotenv": "^6.2.0",
     "jsonwebtoken": "^8.5.0",
     "koa": "^2.7.0",
@@ -34,16 +36,22 @@
     "lodash": "^4.17.15",
     "mockjs": "^1.0.1-beta3",
     "mongoose": "^5.4.15",
-    "redis": "^2.8.0"
+    "qs": "^6.8.0",
+    "redis": "^2.8.0",
+    "set-value": "^3.0.1",
+    "winston": "^3.2.1"
   },
   "devDependencies": {
     "@types/dotenv": "^6.1.1",
     "@types/jest": "^24.0.6",
     "@types/koa-cors": "^0.0.0",
     "@types/redis": "^2.8.10",
+    "chalk": "^2.4.2",
+    "chinese-s2t": "^1.0.0",
     "eslint": "^6.1.0",
     "eslint-config-alloy": "^1.4.2",
     "eslint-plugin-typescript": "^0.14.0",
+    "eslint-utils": "^1.4.2",
     "jest": "^24.9.0",
     "ts-jest": "^24.0.0",
     "typescript": "^3.3.3333",
