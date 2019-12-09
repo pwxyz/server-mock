@@ -8,23 +8,45 @@ import transformRes from '../utils/transformRes';
 import compareTwoObjTypeAndRequired from '../utils/compareTwoObjTypeAndRequired';
 import getMethod from '../utils/getMethod'
 import result from 'lodash/result'
+import transformReq from './../utils/transformReq';
 const mock = new Router({ prefix: 'mock' })
-
+import isArray from 'lodash/isArray'
 mock.get('/x', async ctx => {
   return ctx.body = 'xxx'
 })
 
 
+
+const transformArg = (arg = {}) => {
+  try {
+    let obj = {}
+    for (let key in arg) {
+      if (isArray(arg[key])) {
+        obj[decodeURIComponent(key)] = decodeURIComponent(arg[key])
+      }
+      else if (typeof arg[key] === 'object') {
+        obj[decodeURIComponent(key)] = transformArg(arg[key])
+      }
+      else {
+        obj[decodeURIComponent(key)] = decodeURIComponent(arg[key])
+      }
+    }
+    return obj
+  }
+  catch (_) {
+    return arg
+  }
+}
+
 //本部分为核心逻辑
 mock.all('/:projectid/:router*', async ctx => {
   let res = createCommonRes();
   let method = ctx.method;
-  let arg = ['GET', 'DELETE'].includes(method) ? ctx.state.query : ctx.request['body']
 
-
+  let arg1 = ['GET', 'DELETE'].includes(method) ? transformArg(ctx.state.query) : ctx.request['body']
+  let arg = transformReq({ ...arg1 }) || {}
   let projectid = ctx.params['projectid']
   let router = '/' + ctx.params['router']
-
   let projectArg = null
   projectArg = await Project.findById(projectid)
   let routerPrefix = result(projectArg, 'routerPrefix')
@@ -32,11 +54,8 @@ mock.all('/:projectid/:router*', async ctx => {
 
   //查询当前项目、当前路由下是否存在该方法
   let apiArg = await Api.findOne({ belongTo: projectid, method, router })
-
-
   if (!apiArg) {
     //如果不存在，查询当前项目信息
-
     if (!projectArg) {
       res.message = '不存在该项目或者项目ID错误';
       return ctx.body;
@@ -51,7 +70,7 @@ mock.all('/:projectid/:router*', async ctx => {
       else if (projectArg['allowAdd']) {
         //存在，向其发起请求
 
-
+        // console.log('allowAdd', router)
         let apires = await request({ url: projectArg['testUrl'] + router, method: getMethod(method), data: arg })
         if (apires) {
           let obj = {
@@ -74,6 +93,7 @@ mock.all('/:projectid/:router*', async ctx => {
   //校验必须参数
   let { err } = compareTwoObjTypeAndRequired(arg, apiArg['req'])
   if (err) {
+
     res.message = err
     return ctx.body = res
   }

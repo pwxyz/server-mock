@@ -23,7 +23,7 @@ const transform = (value: string) => {
   else if (value === 'false') {
     return false
   }
-  else if (value.includes(',') && value.split(',').length > 1) {
+  else if (value && value.includes(',') && value.split(',').length > 1) {
     let arr = value.split(',')
     let newarr = arr.map(i => transform(i))
     return newarr
