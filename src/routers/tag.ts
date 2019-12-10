@@ -37,10 +37,11 @@ tag.post('/', async ctx => {
     data
   }
   res.message = '新增成功'
+  res.status = 1
   return ctx.body = res
 })
 
-tag.put('/:tagid', async ctx => {
+tag.put('/', async ctx => {
   let res = createCommonRes()
   const { err, obj } = getArgAndCheck(ctx.request['body'], ['+name', '+description', '+belongTo', '+id'])
   if (err) {
@@ -59,13 +60,14 @@ tag.put('/:tagid', async ctx => {
     data
   }
   res.message = '修改成功'
+  res.status = 1
   return ctx.body = res
 })
 
-tag.delete('/:tagid', async ctx => {
+tag.delete('/', async ctx => {
   let res = createCommonRes()
-  let id = ctx.params['tagid']
-  await Tag.findByIdAndRemove(id)
+  let id = result(ctx.state.query, 'id', [])
+  await Tag.deleteMany({ _id: { $in: id } })
   res.status = 1
   res.message = '删除成功'
   return ctx.body = res
