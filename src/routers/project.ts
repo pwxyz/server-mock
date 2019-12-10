@@ -3,7 +3,7 @@ import Router from 'koa-router';
 import getArgAndCheck from '../utils/getArgAndCheck';
 import Project from './../models/Project';
 import createCommonRes from './../utils/createCommonRes';
-
+import result from 'lodash/result'
 
 const project = new Router({ prefix: 'project' })
 
@@ -57,15 +57,26 @@ project.get('/', async ctx => {
   return ctx.body = res
 })
 
+project.del('/', async ctx => {
+  let id = result(ctx.query, 'id', [])
+  let res = createCommonRes()
+  await Project.deleteMany({ _id: { $in: id } })
+  res.status = 1
+  res.message = '删除成功!'
+  return ctx.body = res
+})
 
-project.put('/:id', async ctx => {
+
+project.put('/', async ctx => {
   let res = createCommonRes()
   const { err, obj } = getArgAndCheck(ctx.request['body'], ['name', 'description', '+id', 'testUrl'])
   if (err) {
     res.message = err;
     return ctx.body = res
   }
-  let id = ctx.params['id']
+  // let id = ctx.params['id']
+  let id = obj['id']
+  delete obj['id']
   obj['updatedAt'] = Number(new Date())
   let project = await Project.findByIdAndUpdate(id, obj, { new: true })
   if (project && project['_id']) {
