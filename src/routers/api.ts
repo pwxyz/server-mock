@@ -19,7 +19,7 @@ api.post('/', async ctx => {
     res.message = err;
     return ctx.body = res
   }
-  let apis = await Api.findOne({ router: obj['router'], method: obj['method'] });
+  let apis = await Api.findOne({ router: obj['router'], method: obj['method'], belongTo: obj['belongTo'] });
   if (apis && apis['router']) {
     res.message = `该router下的method已存在`
     return ctx.body = res
