@@ -47,6 +47,11 @@ mock.all('/:projectid/:router*', async ctx => {
   let arg = transformReq({ ...arg1 }) || {}
   let projectid = ctx.params['projectid']
   let router = '/' + ctx.params['router']
+  console.log('router', router)
+  let url = `http://${process.env.WEB_URL}/project/${projectid}`
+  if (!ctx.params['router']) {
+    return ctx.redirect(url)
+  }
   let projectArg = null
   projectArg = await Project.findById(projectid)
   let routerPrefix = result(projectArg, 'routerPrefix')
