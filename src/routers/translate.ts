@@ -7,7 +7,7 @@ const translate = new Router({ prefix: 'translate' })
 
 translate.get('/:projectid', async ctx => {
   let arr = await Api.find({ belongTo: ctx.params.projectid })
-  arr = JSON.parse(cn.s2t(JSON.stringify(arr)))
+  arr = JSON.parse(cn.t2s(JSON.stringify(arr)))
   // return ctx.body = {
   //   arr
   // }
