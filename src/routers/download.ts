@@ -32,6 +32,7 @@ download.post('/:id', async ctx => {
   res['payload'] = {
     url
   }
+  res.status = 1
   return ctx.body = res
 })
 
