@@ -48,7 +48,7 @@ const getDocx = async (data: any, name: string) => {
 
   data.map(i => setP(i))
 
-  let url = path.join('file', `${name}.docx`)
+  let url = path.join(__dirname, `../../file/${name}.docx`)
   let out = fs.createWriteStream(url)
   out.on('error', function (err) {
     console.log(err)
