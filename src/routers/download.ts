@@ -5,8 +5,7 @@ import Api from './../models/Api';
 import Project from './../models/Project';
 import request from '../utils/request'
 import createCommonRes from '../utils/createCommonRes';
-import Tag from '../models/Tag';
-import result from 'lodash/result';
+import send from 'koa-send';
 import getDocx from './../utils/docx';
 import get from 'lodash/get'
 import dayjs from 'dayjs'
@@ -29,11 +28,13 @@ download.post('/:id', async ctx => {
   // setTimeout(() => {
 
   // }, 30 * 60 * 1000)  //定时器  30分钟后删除文件 
-  res['payload'] = {
-    url
-  }
-  res.status = 1
-  return ctx.body = res
+  ctx.attachment(url);
+  await send(ctx, url)
+  // res['payload'] = {
+  //   url
+  // }
+  // res.status = 1
+  // return ctx.body = res
 })
 
 
