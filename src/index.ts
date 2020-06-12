@@ -6,7 +6,7 @@ import body from 'koa-body';
 import dotenv from 'dotenv';
 import path from 'path';
 import router from './routers';
-
+import statics from 'koa-static';
 import catchErr from './middleware/catchErr'
 import decryptToken from './middleware/decryptToken';
 import transformQuery from './middleware/transformQuery';
@@ -21,6 +21,7 @@ const port = process.env.PORT || 3364;
 app.use(cors());
 app.use(catchErr)
 app.use(decryptToken)
+app.use(statics(path.join(__dirname, '../file')))
 // app.use(body({
 //   multipart: true,
 //   formidable: {
