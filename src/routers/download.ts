@@ -9,11 +9,13 @@ import send from 'koa-send';
 import getDocx from './../utils/docx';
 import get from 'lodash/get'
 import dayjs from 'dayjs'
+import fss from 'fs-extra'
+
 const download = new Router({ prefix: 'download' });
 
 
 //下载docx格式文档
-download.post('/:id', async ctx => {
+download.all('/:id', async ctx => {
   let res = createCommonRes()
   let id = ctx.params['id']
   if (!id) {
@@ -23,13 +25,12 @@ download.post('/:id', async ctx => {
   let data = await Api.find({ belongTo: id }).populate('tag').sort('router')
   let nameArg = await Project.findById(id)
   let name = `${get(nameArg, 'name')}_${dayjs().format('YYYY-MM-DD_HH_mm_ss')}`.replace(/[^\u4e00-\u9fa5a-zA-Z0-9\-_.]/g, '_')
-  let url = await getDocx(data, name)
-  //暂时注释定时删除部分
-  // setTimeout(() => {
-
-  // }, 30 * 60 * 1000)  //定时器  30分钟后删除文件 
+  let url = await getDocx(data, name, get(nameArg, 'name'))
+  setTimeout(() => {
+    fss.remove(url)
+  }, 20 * 60 * 1000)  //定时器  20分钟后删除文件 
   ctx.attachment(url);
-  await send(ctx, url)
+  await send(ctx, url, { root: '/' })
   // res['payload'] = {
   //   url
   // }
