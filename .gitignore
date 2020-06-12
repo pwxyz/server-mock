@@ -3,6 +3,5 @@ node_modules
 
 dist*
 __dist
-log
 file
 src/uploads
