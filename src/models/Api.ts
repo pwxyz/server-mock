@@ -11,6 +11,7 @@ const ApiSchema = new Schema({
   tag: { type: mongoose.SchemaTypes.ObjectId, ref: 'Tag' },
   remark: { type: String },
   headers: { type: Object },
+  sleep: { type: Number, default: 0 },
   req: { type: Object },
   res: { type: Object },
   noused: { type: Boolean, default: false },

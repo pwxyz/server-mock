@@ -9,8 +9,11 @@ import compareTwoObjTypeAndRequired from '../utils/compareTwoObjTypeAndRequired'
 import getMethod from '../utils/getMethod'
 import result from 'lodash/result'
 import transformReq from './../utils/transformReq';
-const mock = new Router({ prefix: 'mock' })
+import sleep from './../utils/sleep';
+import get from 'lodash/get';
+
 import isArray from 'lodash/isArray'
+const mock = new Router({ prefix: 'mock' })
 mock.get('/x', async ctx => {
   return ctx.body = 'xxx'
 })
@@ -105,6 +108,11 @@ mock.all('/:projectid/:router*', async ctx => {
 
   //转换res参数
   let newRes = transformRes(apiArg['res'], arg)
+  let num = get(apiArg, 'sleep', 0)
+  if (num) {
+    await sleep(num)
+  }
+
   return ctx.body = newRes
 })
 
