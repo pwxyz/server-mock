@@ -5,3 +5,4 @@ dist*
 __dist
 file
 src/uploads
+uploads
