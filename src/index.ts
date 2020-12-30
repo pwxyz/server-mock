@@ -75,7 +75,7 @@ app.use(body({
 }));
 
 app.use(async (ctx, next) => {
-  let isEncrypt = get(ctx, 'header.content-type').includes('/text')
+  let isEncrypt = get(ctx, 'header.content-type', '').includes('/text')
   if (!isEncrypt) {
     return next()
   }
