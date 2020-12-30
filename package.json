@@ -26,6 +26,7 @@
     "babel-eslint": "^10.0.1",
     "busboy": "^0.3.0",
     "chinese-s2t": "^1.0.0",
+    "crypto-js": "^4.0.0",
     "dayjs": "^1.8.28",
     "dotenv": "^6.2.0",
     "fs-extra": "^9.0.1",
