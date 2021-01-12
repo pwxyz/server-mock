@@ -13,7 +13,8 @@ const getNewObj = (obj, arg) => {
   let newObj = {}
   for (let key in obj) {
     let newKey = limitKey(key)
-    let value = ((newKey in arg) && arg[newKey] && typeof arg[newKey] === typeof obj[key]) ? arg[newKey] : obj[key]
+    // let value = ((newKey in arg) && arg[newKey] && typeof arg[newKey] === typeof obj[key]) ? arg[newKey] : obj[key]
+    let value = obj[key]
     let newValue = isArray(value) ? value.map(i => getNewObj(i, arg)) : isObject(value, arg) ? getNewObj(value, arg) : value
     newObj[newKey] = transValue(newValue)
   }
