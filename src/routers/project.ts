@@ -10,7 +10,7 @@ const project = new Router({ prefix: 'project' })
 
 project.post('/', async ctx => {
   let res = createCommonRes()
-  const { err, obj } = getArgAndCheck(ctx.request['body'], ['+name', 'description', 'testUrl'])
+  const { err, obj } = getArgAndCheck(ctx.request['body'], ['+name', 'description', 'testUrl',])
   if (err) {
     res.message = err;
     return ctx.body = res

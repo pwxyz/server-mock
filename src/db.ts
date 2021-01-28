@@ -1,6 +1,6 @@
 
 
-import  mongoose from 'mongoose';
+import mongoose from 'mongoose';
 
 
 const db = mongoose.connection;
@@ -13,7 +13,7 @@ console.log(host);
 const url = `mongodb://${host}/${name}`;
 mongoose.connect(url, { useNewUrlParser: true });
 
-db.on('error', (err) => console.error.bind(console, err) );
-db.on('open', () => console.log('mongoose connect') )
+db.on('error', (err) => console.error.bind(console, err));
+db.on('open', () => console.log('mongoose connect'))
 
 

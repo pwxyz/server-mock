@@ -15,6 +15,7 @@ const ApiSchema = new Schema({
   req: { type: Object },
   res: { type: Object },
   noused: { type: Boolean, default: false },
+  version: { type: mongoose.SchemaTypes.ObjectId, ref: 'Version' },
   createdAt: {
     type: Number, default: function () {
       return Number(new Date())

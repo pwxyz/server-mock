@@ -52,8 +52,11 @@ mock.all('/:projectid/:router*', async ctx => {
   let router = '/' + ctx.params['router']
 
   let url = `http://${process.env.WEB_URL}/project/${projectid}`
+
   if (!ctx.params['router']) {
-    return ctx.redirect(url)
+    if (!ctx.header['accept'].includes('json')) {
+      return ctx.redirect(url)
+    }
   }
   let projectArg = null
   projectArg = await Project.findById(projectid)

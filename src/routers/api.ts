@@ -7,6 +7,7 @@ import request from '../utils/request'
 import createCommonRes from '../utils/createCommonRes';
 import Tag from '../models/Tag';
 import result from 'lodash/result';
+import get from 'lodash/get';
 
 
 const api = new Router({ prefix: 'api' });
@@ -14,7 +15,7 @@ const api = new Router({ prefix: 'api' });
 api.post('/', async ctx => {
   let res = createCommonRes()
   // console.log(new Date())
-  const { err, obj } = getArgAndCheck(ctx.request['body'], ['+router', '+method', 'headers', 'req', 'res', '+belongTo', 'remark', 'noused', 'tag', 'sleep'])
+  const { err, obj } = getArgAndCheck(ctx.request['body'], ['+router', '+method', 'headers', 'req', 'res', '+belongTo', 'remark', 'noused', 'tag', 'sleep', 'version'])
   if (err) {
     res.message = err;
     return ctx.body = res
@@ -35,7 +36,7 @@ api.post('/', async ctx => {
 //獲取所有api，或者是某個項目的所有api
 api.get('/', async ctx => {
   let res = createCommonRes()
-  const { err, obj } = getArgAndCheck(ctx.state.query, ['id'])
+  const { err, obj } = getArgAndCheck(ctx.state.query, ['id', 'version'])
   if (err) {
     res.message = err;
     return ctx.body = res
@@ -43,7 +44,7 @@ api.get('/', async ctx => {
   let allApi = null
   let tagList = []
   if (obj['id']) {
-    allApi = await Api.find({ belongTo: obj['id'] }).populate('tag').sort('-updatedAt')
+    allApi = get(obj, 'version') ? await Api.find({ belongTo: obj['id'], version: get(obj, 'version') }).populate('tag').populate('version').sort('-updatedAt') : await Api.find({ belongTo: obj['id'], version: { $exists: false } }).populate('tag').populate('version').sort('-updatedAt')
     tagList = await Tag.find({ belongTo: obj['id'] })
     // tagList = tagList.map(i => {
     //   let obj = { ...i }
@@ -57,7 +58,7 @@ api.get('/', async ctx => {
     // })
   }
   else {
-    allApi = await Api.find().populate('tag').sort('-updatedAt')
+    allApi = await Api.find().populate('tag').populate('version').sort('-updatedAt')
   }
 
   if (allApi) {
@@ -76,7 +77,7 @@ api.get('/:apiId', async ctx => {
     res.message = '缺少必要的参数id'
     return ctx.body = res
   }
-  let apis = await Api.findById(apiId).populate('tag')
+  let apis = await Api.findById(apiId).populate('tag').populate('version')
   if (apis) {
     res.message = '获取成功'
     res.status = 1
